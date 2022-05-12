@@ -15,7 +15,13 @@ SECRET_KEY = config["SECRET_KEY"]
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost:3000",
+    "127.0.0.1:3000",
+    "localhost:8000",
+    "127.0.0.1:8000",
+    "52.90.148.186"
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
