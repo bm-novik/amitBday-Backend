@@ -1,12 +1,10 @@
-from django.contrib.auth.hashers import make_password, check_password
-from django.db import transaction
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     confirm_password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
 
@@ -25,10 +23,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        with transaction.atomic():
-            user = User.objects.create_user(username=validated_data['username'],
-                                            password=make_password(validated_data['password']))
-            return user
+        user = User.objects.create_user(username=validated_data['username'],
+                                        password=make_password(validated_data['password']))
+        return user
 
 
 class LoginSerializer(serializers.Serializer):
@@ -41,9 +38,3 @@ class LoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError("Incorrect Credentials")
 
-
-class UserDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username']
-        read_only_fields = ["id"]

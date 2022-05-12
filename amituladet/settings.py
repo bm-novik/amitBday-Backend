@@ -5,7 +5,7 @@ from pathlib import Path
 from rest_framework.settings import api_settings
 
 
-with open(os.path.join('core', 'config.json')) as fh:
+with open(os.path.join('amituladet', 'config.json')) as fh:
     config = json.load(fh)
 
 
@@ -24,15 +24,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Rest-API Framework
     'rest_framework',
+
+    # Project APPS
+    # 'song.apps.SongConfig',
+    'account.apps.AccountConfig',
+
+    # 3rd party Apps
     'knox',
-    'song.apps.SongConfig',
+    "corsheaders",
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # allow connection to front end
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,7 +72,14 @@ WSGI_APPLICATION = 'amituladet.wsgi.application'
 
 
 DATABASES = {
-    config["DATABASES"]
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config["DATABASES"]["NAME"],
+        'USER': config["DATABASES"]["USER"],
+        'PASSWORD': config["DATABASES"]["PASSWORD"],
+        'HOST': config["DATABASES"]["HOST"],
+        'PORT': '5432',
+    }
 }
 
 REST_KNOX = {
@@ -101,6 +117,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ['knox.auth.TokenAuthentication'],
+}
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
