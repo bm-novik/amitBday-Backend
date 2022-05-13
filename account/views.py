@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
+from account.models import Rsvp
 from account.serializers import LoginSerializer, UserSerializer, RsvpSerializer
 
 
@@ -37,6 +38,9 @@ class RegisterAPIView(GenericAPIView):
 
 class RsvpView(GenericAPIView):
     serializer_class = RsvpSerializer
+
+    def get(self, request, *args, **kwargs):
+        return Response(self.get_serializer(Rsvp.objects.all(), many=True).data)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
