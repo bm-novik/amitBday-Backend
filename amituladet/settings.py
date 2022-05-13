@@ -20,7 +20,8 @@ ALLOWED_HOSTS = [
     "127.0.0.1:3000",
     "localhost:8000",
     "127.0.0.1:8000",
-    "52.90.148.186"
+    "52.90.148.186",
+    "localhost"
 ]
 
 INSTALLED_APPS = [

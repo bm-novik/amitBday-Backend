@@ -2,6 +2,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework.serializers import ModelSerializer
+
+from account.models import Rsvp
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,3 +41,8 @@ class LoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError("Incorrect Credentials")
 
+
+class RsvpSerializer(ModelSerializer):
+    class Meta:
+        model = Rsvp
+        fields = '__all__'
