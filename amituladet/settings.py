@@ -4,10 +4,8 @@ from datetime import timedelta
 from pathlib import Path
 from rest_framework.settings import api_settings
 
-
 with open(os.path.join('amituladet', 'config.json')) as fh:
     config = json.load(fh)
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +19,8 @@ ALLOWED_HOSTS = [
     "localhost:8000",
     "127.0.0.1:8000",
     "52.90.148.186",
-    "localhost"
+    "localhost",
+    "amitmuledet.com"
 ]
 
 INSTALLED_APPS = [
@@ -76,7 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'amituladet.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -134,5 +132,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://52.90.148.186"
+    "http://52.90.148.186",
+    "http://amitmuledet.com"
 ]
