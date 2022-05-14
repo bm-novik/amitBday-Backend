@@ -17,7 +17,7 @@ ALLOWED_HOSTS = [
     "localhost:3000",
     "127.0.0.1:3000",
     "localhost:8000",
-    "127.0.0.1:8000",
+    "127.0.0.1",
     "52.90.148.186",
     "localhost",
     "amitmuledet.com"

@@ -25,7 +25,7 @@ class LoginAPIView(GenericAPIView):
 class RegisterAPIView(GenericAPIView):
     serializer_class = UserSerializer
 
-    # Register API
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
@@ -38,6 +38,7 @@ class RegisterAPIView(GenericAPIView):
 
 class RsvpView(GenericAPIView):
     serializer_class = RsvpSerializer
+    queryset = Rsvp.objects.all()
 
     def get(self, request, *args, **kwargs):
         return Response(self.get_serializer(Rsvp.objects.all(), many=True).data)
