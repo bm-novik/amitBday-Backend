@@ -13,10 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'confirm_password']
-
+        fields = ['id', 'username', 'first_name', 'last_name', 'is_staff', 'is_superuser', 'password', 'confirm_password']
         write_only_fields = ['password']
-        read_only_fields = ["id"]
+        read_only_fields = ["id", 'is_staff', 'is_superuser']
 
     def validate(self, data):
         if not data.get('password') or not data.get('confirm_password'):
@@ -27,7 +26,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(username=validated_data['username'],
-                                        password=make_password(validated_data['password']))
+                                        password=validated_data['password'],
+                                        first_name=validated_data['first_name'],
+                                        last_name=validated_data['last_name'],
+                                        )
         return user
 
 
