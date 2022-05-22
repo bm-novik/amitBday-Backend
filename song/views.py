@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 # From Project
-from amituladet.utils import calc
+from amituladet.utils import calc_and_stringify
 from song.models import Rating, Song
 from song.pagination import SongPagination
 from song.serializers import RatingSerializer, SongSerializer
@@ -31,7 +31,7 @@ class RatingViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'head', 'options']
 
     def get_queryset(self):
-        return Rating.objects.all().prefetch_related('user', 'song')
+        return Rating.objects.all()
 
     def create(self, request, *args, **kwargs):
         user = get_object_or_404(User, pk=request.user.id)
@@ -70,7 +70,7 @@ class RatingViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def rating_calc(self, request, *args, **kwargs):
-        raring_list = self.get_queryset().values('rating', 'user__is_staff')
-        print(raring_list)
-        print(calc(raring_list))
+        raring_list = Rating.objects.calc_list()
+        return Response(calc_and_stringify(raring_list),
+                        status=status.HTTP_200_OK)
 
