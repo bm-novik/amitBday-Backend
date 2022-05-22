@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 # From Project
+from account.models import Permission
+from account.serializers import PermissionSerializer
 from amituladet.utils import calc_and_stringify
 from song.models import Rating, Song
 from song.pagination import SongPagination
@@ -73,4 +75,12 @@ class RatingViewSet(viewsets.ModelViewSet):
         raring_list = Rating.objects.calc_list()
         return Response(calc_and_stringify(raring_list),
                         status=status.HTTP_200_OK)
+
+
+class PermissionViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'put', 'head', 'options']
+    serializer_class = PermissionSerializer
+
+    def get_queryset(self):
+        return Permission.objects.all()
 

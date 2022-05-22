@@ -1,4 +1,3 @@
-
 from django.db import models
 
 
@@ -11,4 +10,5 @@ class Rsvp(models.Model):
     song = models.CharField(max_length=128, null=True, blank=True)
 
 
-
+class Permission(models.Model):
+    permission = models.BooleanField(default=False)

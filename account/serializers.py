@@ -1,10 +1,9 @@
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 
-from account.models import Rsvp
+from account.models import Rsvp, Permission
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,7 +12,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'is_staff', 'is_superuser', 'password', 'confirm_password']
+        fields = ['id', 'username', 'first_name', 'last_name', 'is_staff', 'is_superuser', 'password',
+                  'confirm_password']
         write_only_fields = ['password']
         read_only_fields = ["id", 'is_staff', 'is_superuser']
 
@@ -47,4 +47,10 @@ class LoginSerializer(serializers.Serializer):
 class RsvpSerializer(ModelSerializer):
     class Meta:
         model = Rsvp
+        fields = '__all__'
+
+
+class PermissionSerializer(ModelSerializer):
+    class Meta:
+        model = Permission
         fields = '__all__'
