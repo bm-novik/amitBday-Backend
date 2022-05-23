@@ -46,7 +46,7 @@ def calc_and_stringify(rating_list):
         judges = calc_results(
             max_rating_score=max_rating_score,
             song=song_details,
-            max_possible_result=max_possible_result,
+            max_possible_result=100,
             group_classification='judges',
             group_percent=judges_percent
         ) if song_details['judges_count'] > 0 else 0
@@ -54,7 +54,7 @@ def calc_and_stringify(rating_list):
         audience = calc_results(
             max_rating_score=max_rating_score,
             song=song_details,
-            max_possible_result=max_possible_result,
+            max_possible_result=100,
             group_classification='audience',
             group_percent=audience_percent
         ) if song_details['audience_count'] > 0 else 0
